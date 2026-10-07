@@ -45,6 +45,30 @@ const heroCases = [
   });
 })();
 
+// Lock the hero to the height of the screen as first loaded.
+// On phones the visible height changes while scrolling (the address bar
+// collapses and reappears). If the hero follows that change, its cover-sized
+// photo rescales and appears to zoom. So the height is measured once and only
+// re-measured when the WIDTH changes, i.e. a rotation or a real window
+// resize, never on scroll-driven height changes.
+(function lockHeroHeight(){
+  const root = document.documentElement;
+  let lastWidth = 0;
+  function measure(){
+    const w = window.innerWidth;
+    if (w === lastWidth) return;
+    lastWidth = w;
+    root.style.setProperty('--hero-h', window.innerHeight + 'px');
+  }
+  measure();
+  window.addEventListener('resize', measure);
+  window.addEventListener('orientationchange', function(){
+    // innerHeight isn't final until the rotation settles.
+    lastWidth = 0;
+    setTimeout(measure, 250);
+  });
+})();
+
 // Scroll progress bar (the "shifting border" that redraws as you scroll)
 const progressBar = document.getElementById('borderlineProgress');
 
@@ -104,12 +128,39 @@ document.querySelectorAll('.main-nav a').forEach(link => {
     const target = id === 'top' ? null : document.getElementById(id);
     if (id !== 'top' && !target) return false;
 
-    const y = target
-      ? window.scrollY + target.getBoundingClientRect().top - headerOffset()
-      : 0;
-    // Ceil rather than floor: landing a fraction of a pixel short would
-    // leave a hairline of the previous section showing under the header.
-    window.scrollTo({ top: Math.max(0, Math.ceil(y)), behavior: 'auto' });
+    // If the visitor starts scrolling themselves, stop re-aligning so the
+    // page never pulls them back.
+    let userMoved = false;
+    const stop = function(){ userMoved = true; };
+    ['wheel','touchstart','keydown'].forEach(function(ev){
+      window.addEventListener(ev, stop, { once: true, passive: true });
+    });
+    function align(){
+      if (userMoved) return;
+      const y = target
+        ? window.scrollY + target.getBoundingClientRect().top - headerOffset()
+        : 0;
+      // Ceil rather than floor: landing a fraction of a pixel short would
+      // leave a hairline of the previous section showing under the header.
+      const top = Math.max(0, Math.ceil(y));
+      if (Math.abs(window.scrollY - top) > 1) {
+        window.scrollTo({ top: top, behavior: 'auto' });
+      }
+    }
+    align();
+    // Re-check after the jump. The very first jump from the top of the page
+    // is the one that triggers late layout work: phone browsers collapse
+    // the address bar on the first big scroll, and web fonts or images may
+    // still be settling. Any of these can move the target after the first
+    // measurement, leaving its heading under the header. Re-measuring over
+    // the next few frames, and once fonts are ready, puts it back flush.
+    // Each pass does nothing if the section is already in place.
+    requestAnimationFrame(function(){ requestAnimationFrame(align); });
+    setTimeout(align, 150);
+    setTimeout(align, 400);
+    if (document.fonts && document.fonts.status !== 'loaded') {
+      document.fonts.ready.then(align);
+    }
 
     if (pushState && window.history && history.pushState) {
       history.pushState(null, '', hash);

@@ -71,6 +71,10 @@ section[id]{
 }
 /* The hero sets its own full-viewport height and sits above the first
    nav destination, so it is left out of the rule above. */
+/* Contact is the last section, so nothing below it can peek through and the
+   full-screen floor only added empty space. It sizes to its content; jumping
+   to it scrolls to the bottom of the page instead. */
+section#contact{ min-height: 0; }
 
 /* No horizontal scrolling. On a phone even a few pixels of overflow lets the
    whole page slide left and right as you scroll, which reads as the layout
@@ -227,8 +231,12 @@ body{
      padding. A 500px cap (sized only for the name) made the row wrap on
      wide screens while the smaller clamped type below 900px still fit on
      one line — wrapping as the viewport got WIDER, which is backwards. */
-  max-width: 640px;
+  /* 640px for the identity column plus room for the CV button beside it. */
+  max-width: 880px;
   min-width: 280px;
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(28px, 3vw, 48px);
   /* Tighter top and bottom than the sides: the panel reads as a block of
      information, and generous vertical padding made it float. Horizontal
      values are unchanged. */
@@ -258,6 +266,46 @@ body{
   font-weight: 700;
   margin-right: 2px;
   color: var(--white);
+}
+
+/* Identity column. Sized to its widest line (the cases row), so the two
+   horizontal rules end exactly where "Armenia 2023" does. */
+.hero-panel-main{ flex: 0 1 auto; min-width: 0; }
+
+/* CV download, top-right of the panel. Outlined in white; fills white
+   with red text on hover. Same file as the nav's CV link. */
+.hero-cv{
+  flex: none;
+  align-self: flex-start;
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 12.5px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--white);
+  text-decoration: none;
+  border: 1.5px solid rgba(255,254,251,0.85);
+  padding: 9px 13px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.hero-cv:hover,
+.hero-cv:focus-visible{ background: var(--white); color: var(--red); }
+.hero-cv:focus-visible{ outline: 2px solid var(--white); outline-offset: 3px; }
+
+/* Narrow screens: the cases row wraps and fills the panel, so the button
+   is lifted out of the flow and pinned to the top-right corner, beside the
+   name (which is short enough to leave room). Offsets match the panel's
+   phone padding. */
+@media (max-width: 760px){
+  .hero-panel{ display: block; position: relative; }
+  /* Still sized to its own widest line, so the rules stop where the text
+     does rather than running under the CV button. */
+  .hero-panel-main{ width: fit-content; max-width: 100%; }
+  .hero-cv{
+    position: absolute;
+    top: clamp(18px, 2.4vw, 30px);
+    right: clamp(22px, 3vw, 40px);
+    padding: 7px 10px;
+  }
 }
 
 @media (max-width: 900px){
@@ -292,11 +340,21 @@ body{
    site/_archive-territorial-mourning-diagram.html for possible reuse. */
 
 .hero-cases{
-  display: flex;
-  gap: 0;
-  flex-wrap: wrap;
+  /* Dividers sit on the LEFT of each case, and the inner row is shifted
+     left by exactly one divider's worth (gap + rule + gap). The first case
+     on every line therefore has its divider pushed outside this box and
+     clipped. Result: dividers appear only BETWEEN cases on the same line,
+     never dangling at the end of a line when "Armenia 2023" wraps. */
+  --case-gap: 20px;
+  overflow: hidden;
   border-top: 1px solid rgba(255,254,251,0.3);
   padding-top: 10px;
+}
+.hero-cases-inner{
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 4px;
+  margin-left: calc(-2 * var(--case-gap) - 1px);
 }
 
 .hero-method{
@@ -319,12 +377,11 @@ body{
      separates itself by weight 700, the white, and its asterisk, so the
      inactive ones don't need to be faded to stay secondary. */
   color: rgba(255,254,251,0.88);
-  padding-right: 20px;
-  margin-right: 20px;
-  border-right: 1px solid rgba(255,254,251,0.3);
+  margin-left: var(--case-gap);
+  padding-left: var(--case-gap);
+  border-left: 1px solid rgba(255,254,251,0.3);
   transition: color 0.2s ease;
 }
-.hero-cases span:last-child{ border-right: none; margin-right: 0; padding-right: 0; }
 
 /* Active case: identified by weight + asterisk, not color — the panel
    is always red, so a case-specific color here would fail contrast for
@@ -346,7 +403,8 @@ body{
 /* ============================================================
    ABOUT — headshot offset against grid
    ============================================================ */
-.about{ padding: 150px 0 55px; }
+/* Same 55px top as the other sections (was 150px). */
+.about{ padding: 55px 0; }
 
 .about-grid{
   display: grid;
@@ -751,7 +809,9 @@ body{
    FELLOWSHIPS & AWARDS
    ============================================================ */
 .fellowships{ padding: 55px 0; background: var(--paper-deep); }
-.fellowships .kicker{ margin-bottom: 32px; }
+/* Kicker-to-first-subhead gap matches Publications (16px) so the two
+   sections that open straight into a subhead look the same. */
+.fellowships .kicker{ margin-bottom: 16px; }
 
 .fellowship-list{ list-style: none; margin: 0; padding: 0; max-width: var(--measure); }
 
@@ -1003,7 +1063,7 @@ body{
 /* ============================================================
    DISSERTATION RESEARCH — case blocks
    ============================================================ */
-.research{ padding: 50px 0 55px; }
+.research{ padding: 55px 0; }
 
 /* ============================================================
    ACADEMIC PUBLICATIONS
@@ -1122,17 +1182,15 @@ body{
 /* Title wraps to the same measure as the body text below it. */
 .teaching-title{ max-width: var(--measure); margin-bottom: 10px; }
 
-/* Marks the seminar as taught solo, distinguishing it from the
-   assistantships listed below. */
-.teaching-role{
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--red);
-  margin: 0 0 14px;
-}
+/* Marks the seminar as taught solo. Uses the same .subhead treatment as
+   "Teaching Assistant, Northwestern University" below, so the two roles
+   read as parallel headings. Only the spacing is set here. */
+.teaching-role{ margin: 0 0 8px; }
+/* Course line sits directly above the syllabus box, no extra gap. */
+.teaching .section-lede{ margin-bottom: 18px; }
+/* Space between the seminar description and the assistantships, matching
+   the gap above other second subheads on the site. */
+.teaching-body + .subhead{ margin-top: 52px; }
 
 
 .ta-list{ list-style: none; margin: 0; padding: 0; max-width: var(--measure); }
@@ -1266,6 +1324,38 @@ body{
   font-weight: 400;
   color: #6B6858;
 }
+
+/* Media commentary summary under the three recent appearances. Hard-edged
+   tiles rather than rounded pills, to match the site's no-radius geometry. */
+.engagement-list + .engagement-subhead{ margin-top: 52px; }
+.outlet-list{
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-wrap: wrap; gap: 8px;
+  max-width: var(--measure);
+}
+.outlet-pill{
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  color: var(--ink);
+  background: var(--white);
+  border: 1px solid #D6CFC0;
+  padding: 7px 12px;
+  display: inline-flex; align-items: baseline; gap: 8px;
+}
+.outlet-pill b{
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--red);
+}
+.outlet-more{ margin: 20px 0 0; font-family: var(--font-body); font-size: 15px; color: #5A5648; max-width: var(--measure); }
+.outlet-more a{
+  color: var(--red);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(158,43,37,0.4);
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+.outlet-more a:hover{ color: var(--red-deep); border-bottom-color: var(--red-deep); }
 
 /* ============================================================
    PROJECT SAUNA
@@ -1523,7 +1613,7 @@ body{
 }
 
 @media (max-width: 900px){
-  .about{ padding-top: 130px; }
+  /* .about top padding override removed: it now matches the other sections. */
 }
 
 /* ---- Everything below 900px gets the compact hero ----
@@ -1539,6 +1629,12 @@ body{
      visible while mobile browser chrome is on screen. Browsers without
      svh support ignore this and keep the 100vh above. */
   .hero{ min-height: 100svh; }
+  /* Pinned to a pixel height measured once by script.js (--hero-h). Some
+     mobile browsers still resize the hero as the address bar slides away
+     on scroll, and background-size: cover then re-scales the photo, which
+     reads as a slight zoom. A fixed pixel height leaves nothing to rescale.
+     Browsers without JS keep the svh value above. */
+  .hero{ min-height: var(--hero-h, 100svh); }
 
   .hero-bottom-row{ padding: 0 14px 16px; gap: 12px 16px; }
 
@@ -1576,12 +1672,8 @@ body{
   .hero-name{ font-size: clamp(30px, 4.6vw, 42px); margin-bottom: 10px; }
   .hero-subtitle{ font-size: clamp(12.5px, 1.6vw, 14.5px); letter-spacing: 0.07em; margin-bottom: 18px; }
 
-  .hero-cases{ padding-top: 8px; }
-  .hero-cases span{
-    font-size: clamp(11.5px, 1.5vw, 13.5px);
-    padding-right: clamp(12px, 1.8vw, 20px);
-    margin-right: clamp(12px, 1.8vw, 20px);
-  }
+  .hero-cases{ padding-top: 8px; --case-gap: clamp(12px, 1.8vw, 20px); }
+  .hero-cases span{ font-size: clamp(11.5px, 1.5vw, 13.5px); }
 
   .hero-method{ margin-top: 10px; padding-top: 8px; font-size: clamp(11px, 1.4vw, 12.5px); }
 

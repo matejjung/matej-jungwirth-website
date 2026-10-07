@@ -73,7 +73,7 @@
     <!-- HIDDEN Sept 2026 — restore when Dossier section returns
     <a href="#dossier">Dossier</a>
     -->
-    <a href="materials/cv.pdf" download>CV</a>
+    <a href="materials/jungwirth_cv.pdf" download>CV</a>
     <a href="#sauna">Sauna</a>
     <a href="#contact">Contact</a>
   </nav>
@@ -92,6 +92,11 @@
     </div>
     <div class="hero-bottom-row">
       <div class="hero-panel">
+        <!-- Two columns: the identity block on the left, the CV button in the
+             top-right corner. Keeping the rules inside the left
+             column makes them end at "Armenia 2023" instead of running
+             under the button. -->
+        <div class="hero-panel-main">
         <h1 class="hero-name">Matěj<br>Jungwirth</h1>
         <p class="hero-subtitle">PhD Candidate in Political Science<br>Northwestern University</p>
         <!-- The territorial mourning flow diagram used to sit here. Removed
@@ -99,11 +104,17 @@
              _archive-territorial-mourning-diagram.html for possible reuse
              in the dissertation section. -->
         <div class="hero-cases">
-          <span class="case-cz">Czechoslovakia 1938</span>
-          <span class="case-fi">Finland 1940/1944</span>
-          <span class="case-am">Armenia 2023</span>
+          <!-- Inner wrapper exists only for the divider trick in style.css,
+               which hides the divider at the start of a wrapped line. -->
+          <div class="hero-cases-inner">
+            <span class="case-cz">Czechoslovakia 1938</span>
+            <span class="case-fi">Finland 1940/1944</span>
+            <span class="case-am">Armenia 2023</span>
+          </div>
         </div>
         <div class="hero-method">Comparative Historical Analysis</div>
+        </div>
+        <a class="hero-cv" href="materials/jungwirth_cv.pdf" download aria-label="Download CV (PDF)">CV <svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 1.5v8M3.5 6l3.5 3.5L10.5 6M2 12.5h10"/></svg></a>
       </div>
       <div class="hero-caption" id="heroCaption">
         <!-- caption placeholder, color-matched to the active case -->
@@ -299,6 +310,24 @@
           <p class="pub-desc">With Tade&aacute;&scaron; Cely and Lenka Hrbkov&aacute;. Using original survey data from the Czech Republic, Hungary and Lithuania (n&nbsp;=&nbsp;4,296) and an embedded experiment, we argue that under conditions of party flux and weak social ties, identification with groups is highly individualized, and these &ldquo;structures in our heads&rdquo; strongly predict the role social groups play in party attachments and partisan affect.</p>
         </li>
       </ul>
+
+      <!-- Mirrors "Public policy publications" on the CV. Commissioned
+           reports and policy writing, not peer-reviewed research. -->
+      <h3 class="subhead subhead--onlight pub-subhead">Policy publications</h3>
+      <ul class="pub-list">
+        <li class="pub-item">
+          <p class="pub-cite">Jungwirth, Mat&#283;j. 2021. &ldquo;<span class="pub-cite-title">Texas Power Grid Failure: Causes, Lessons Learned and Implications for EU Energy Market Transformation.</span>&rdquo; <em>Heinrich B&ouml;ll Stiftung</em>. <a href="https://cz.boell.org/en/2021/03/19/texas-power-grid-failure-causes-lessons-learned-and-implications-eu-energy-market">cz.boell.org</a>.</p>
+        </li>
+        <li class="pub-item">
+          <p class="pub-cite">Jungwirth, Mat&#283;j, ed. 2020. <span class="pub-cite-title"><em>Rethinking Return: Lessons from Colombia, Liberia and Nigeria.</em></span> Mercy Corps and IOM. <a href="https://reliefweb.int/report/nigeria/rethinking-return-lessons-colombia-liberia-and-nigeria">reliefweb.int</a>.</p>
+        </li>
+        <li class="pub-item">
+          <p class="pub-cite">Jungwirth, Mat&#283;j. 2020. &ldquo;<span class="pub-cite-title">Joe Biden and Climate: Cause for Cautious Optimism.</span>&rdquo; <em>Heinrich B&ouml;ll Stiftung</em>. <a href="https://cz.boell.org/en/2020/12/03/joe-biden-and-climate-cause-cautious-optimism">cz.boell.org</a>.</p>
+        </li>
+        <li class="pub-item">
+          <p class="pub-cite">Jungwirth, Mat&#283;j. 2019. &ldquo;<span class="pub-cite-title">Pirates, Boat People, and Bystanders: Contradictions at the Marine Bedrock of the International Human Rights Regime.</span>&rdquo; <em>Journal of Public &amp; International Affairs</em>. <a href="https://jpia.princeton.edu/news/pirates-boat-people-and-bystanders-contradictions-marine-bedrock-international-human-rights">jpia.princeton.edu</a>.</p>
+        </li>
+      </ul>
     </div>
   </section>
 
@@ -307,8 +336,8 @@
     <div class="section-inner">
       <p class="kicker">Teaching Experience</p>
       <h2 class="section-title teaching-title">Critical Perspectives on Territorial Conflict</h2>
-      <p class="teaching-role">Instructor of Record</p>
-      <p class="section-lede">INTL_ST 395 &middot; Northwestern University &middot; Fall 2026, Winter 2027</p>
+      <h3 class="subhead teaching-role">Instructor of Record</h3>
+      <p class="section-lede">International Studies 395 &middot; Northwestern University &middot; Fall 2026, Winter 2027</p>
       <a href="materials/syllabus-territorial-conflict.pdf" class="syllabus-link" download>
         <span class="syllabus-link-label">Course syllabus</span>
         <span class="syllabus-link-cta">Download PDF &rarr;</span>
@@ -393,45 +422,39 @@
       <p class="kicker">Public Engagement</p>
       <p class="section-lede">Outside of my academic research and writing, I appear in a variety of Czech and Slovak media channels, including the public TV and radio, offering insights into US domestic and foreign policy issues. I do so as a <a href="https://amo.cz/en/team/matej-jungwirth">Research Fellow</a> with the Prague-based AMO think tank.</p>
 
+      <!-- Three most recent appearances in full; everything else is covered
+           by the outlet counts below. When a newer one lands, add it at the
+           top and drop the oldest. -->
       <ul class="engagement-list">
-        
         <li class="engagement-item">
-          <span class="engagement-outlet">Denník N (2026)</span>
-          <p class="engagement-title"><a href="https://dennikn.sk/5443117/vyhravaju-v-new-yorku-aj-vo-washingtone-co-chcu-demokraticki-socialisti-ktorych-trump-oznacuje-za-najvacsiu-hrozbu-pre-usa/">Vyhrávajú v New Yorku aj vo Washingtone. Čo chcú demokratickí socialisti, ktorých Trump označuje za „najväčšiu hrozbu" pre USA</a></p>
+          <span class="engagement-outlet">Czech Television (2026)</span>
+          <p class="engagement-title"><a href="https://www.ceskatelevize.cz/porady/10101491767-studio-ct24/226411058390927/">V USA se blíží volby do Kongresu</a> <span class="engagement-gloss">— Midterm elections in the US draw near</span></p>
         </li>
         <li class="engagement-item">
-          <span class="engagement-outlet">Czech Television (ČT24, Studio 6) (2026)</span>
+          <span class="engagement-outlet">Czech Television (2026)</span>
           <p class="engagement-title">Dohoda o příměří mezi USA a Íránem <span class="engagement-gloss">— The US–Iran ceasefire agreement</span></p>
         </li>
         <li class="engagement-item">
-          <span class="engagement-outlet">The Daily Northwestern (2024)</span>
-          <p class="engagement-title"><a href="https://dailynorthwestern.com/2024/02/29/opinion/lte-a-fair-contract-for-graduate-workers-must-include-dependent-healthcare-coverage/">A Fair Contract for Graduate Workers Must Include Dependent Healthcare Coverage</a> <span class="engagement-credit">— with C. Logan and M. Standley</span></p>
-        </li>
-        <li class="engagement-item">
-          <span class="engagement-outlet">Deník Referendum (2022)</span>
-          <p class="engagement-title"><a href="https://denikreferendum.cz/clanek/33594-spojene-staty-nad-propasti">Spojené státy nad propastí?</a> <span class="engagement-gloss">— The United States on the brink?</span></p>
-        </li>
-        <li class="engagement-item">
-          <span class="engagement-outlet">Heinrich Böll Stiftung Prague (2021)</span>
-          <p class="engagement-title"><a href="https://cz.boell.org/en/2021/03/19/texas-power-grid-failure-causes-lessons-learned-and-implications-eu-energy-market">Výpadek elektrické sítě v Texasu: příčiny, poučení a důsledky pro transformaci energetického trhu v EU</a> <span class="engagement-gloss">— The Texas power grid failure: causes, lessons, and implications for the EU energy market</span></p>
-        </li>
-        <li class="engagement-item">
-          <span class="engagement-outlet">Heinrich Böll Stiftung Prague (2020)</span>
-          <p class="engagement-title"><a href="https://cz.boell.org/en/2020/12/03/joe-biden-and-climate-cause-cautious-optimism">Joe Biden and Climate: Cause for Cautious Optimism</a></p>
-        </li>
-        <li class="engagement-item">
-          <span class="engagement-outlet">info.cz (2020)</span>
-          <p class="engagement-title"><a href="https://www.info.cz/nazory/bidenuv-kabinet-balancovani-duraz-na-klima-a-diplomy-z-prestiznich-univerzit">Bidenův kabinet: balancování, důraz na klima a diplomy z prestižních univerzit</a> <span class="engagement-gloss">— Biden's cabinet: balancing, a climate focus, and Ivy League degrees</span></p>
-        </li>
-        <li class="engagement-item">
-          <span class="engagement-outlet">Mercy Corps &amp; IOM (2020)</span>
-          <p class="engagement-title"><a href="https://reliefweb.int/report/nigeria/rethinking-return-lessons-colombia-liberia-and-nigeria">Rethinking Return: Lessons from Colombia, Liberia and Nigeria</a> <span class="engagement-credit">— editor</span></p>
-        </li>
-        <li class="engagement-item">
-          <span class="engagement-outlet">Journal of Public &amp; International Affairs (2019)</span>
-          <p class="engagement-title"><a href="https://jpia.princeton.edu/news/pirates-boat-people-and-bystanders-contradictions-marine-bedrock-international-human-rights">Pirates, Boat People, and Bystanders: Contradictions at the Marine Bedrock of the International Human Rights Regime</a></p>
+          <span class="engagement-outlet">Denník N (2026)</span>
+          <p class="engagement-title"><a href="https://dennikn.sk/5443117/vyhravaju-v-new-yorku-aj-vo-washingtone-co-chcu-demokraticki-socialisti-ktorych-trump-oznacuje-za-najvacsiu-hrozbu-pre-usa/">Vyhrávajú v New Yorku aj vo Washingtone. Čo chcú demokratickí socialisti, ktorých Trump označuje za „najväčšiu hrozbu" pre USA</a> <span class="engagement-gloss">— What does DSA, US&rsquo; &ldquo;greatest threat&rdquo; according to Trump actually want</span></p>
         </li>
       </ul>
+
+      <!-- Outlet summary from the AMO profile; update counts there and here together. -->
+      <h3 class="subhead engagement-subhead">Media commentary</h3>
+      <ul class="outlet-list">
+        <li class="outlet-pill">Česká televize <b>13</b></li>
+        <li class="outlet-pill">Seznam Zprávy <b>7</b></li>
+        <li class="outlet-pill">Hospodářské noviny <b>2</b></li>
+        <li class="outlet-pill">Denník N <b>1</b></li>
+        <li class="outlet-pill">SME <b>1</b></li>
+        <li class="outlet-pill">TERAZ <b>1</b></li>
+        <li class="outlet-pill">info.sk <b>1</b></li>
+        <li class="outlet-pill">Aktuálně.cz <b>1</b></li>
+        <li class="outlet-pill">iDNES <b>1</b></li>
+        <li class="outlet-pill">Respekt <b>1</b></li>
+      </ul>
+      <p class="outlet-more">Full list of my media appearances, interviews and comments can be found on <a href="https://amo.cz/en/team/matej-jungwirth">AMO website</a>.</p>
     </div>
   </section>
 
@@ -473,7 +496,7 @@
           <h3>Teaching Evaluations</h3>
           <span class="dossier-cta">PDF →</span>
         </a>
-        <a href="materials/cv.pdf" class="dossier-item">
+        <a href="materials/jungwirth_cv.pdf" class="dossier-item">
           <h3>Curriculum Vitae</h3>
           <span class="dossier-cta">PDF →</span>
         </a>
@@ -577,7 +600,7 @@
 // Download All: bundles whichever dossier PDFs are live right now.
 //
 // Two cases have to work:
-//   1. Deployed site — tile hrefs are relative paths ("materials/cv.pdf"),
+//   1. Deployed site — tile hrefs are relative paths ("materials/jungwirth_cv.pdf"),
 //      so each one is fetched over the network.
 //   2. preview.html  — build_preview.py has inlined every PDF as a
 //      data: URI, so the bytes are already in the page and decoded locally.
