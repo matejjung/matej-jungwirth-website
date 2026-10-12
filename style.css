@@ -1010,6 +1010,16 @@ body{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+/* Small qualifier under a subhead — e.g. "(selected — see CV for a full
+   list)". Sits tight to the heading above it and is set in the label face
+   so it reads as an annotation rather than as body copy. */
+.subhead-note{
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: #6B6658;
+  margin: -8px 0 16px;
+}
 /* Space above a subhead that follows earlier content, rather than one
    that opens a section directly under its kicker. */
 .fellowship-list + .subhead,
@@ -1212,35 +1222,6 @@ body{
   white-space: nowrap;
 }
 .ta-eval-wrap{ flex-basis: 100%; margin-top: 6px; }
-/* Sits below the whole course list now, so it needs its own top spacing
-   rather than inheriting it from the wrapper span. */
-.ta-list + .ta-eval-link{ margin-top: 20px; }
-.ta-eval-link{
-  display: inline-flex;
-  align-items: baseline;
-  gap: 12px;
-  padding: 11px 16px;
-  background: var(--white);
-  border: 1.5px solid var(--ink);
-  text-decoration: none;
-  transition: transform 0.2s ease, background 0.2s ease;
-}
-.ta-eval-link:hover{ transform: translateY(-3px); background: var(--paper); }
-.ta-eval-link-label{
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 13.5px;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-  color: var(--ink);
-}
-.ta-eval-link-cta{
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  color: var(--red);
-}
-
 @media (max-width: 620px){
   .ta-list li{ flex-direction: column; gap: 4px; }
   .ta-terms{ white-space: normal; }
