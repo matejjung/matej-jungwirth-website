@@ -690,6 +690,67 @@ body{
   .concept-flow{ display: none; }
 }
 
+/* Revised diagram (Oct 2026): loss -> displacement, both -> mourning,
+   mourning -> two outcome sets linked by a dashed two-way arrow.
+   Five columns instead of three; label columns are 28 + 44 + 28 = 100px
+   tall, and the arrow SVGs (viewBox 46x100) are drawn against that. */
+.concept-flow--outcomes{
+  grid-template-columns: max-content 46px auto 46px max-content;
+}
+.concept-flow--outcomes .concept-labels--in{ grid-column: 1; align-items: flex-end; }
+.concept-flow--outcomes .concept-arrows--in{ grid-column: 2; }
+.concept-flow--outcomes .concept-result{ grid-column: 3; padding: 0 2px; text-align: center; }
+.concept-flow--outcomes .concept-arrows--out{ grid-column: 4; }
+.concept-flow--outcomes .concept-labels--out{ grid-column: 5; align-items: flex-start; padding-right: 0; padding-left: 6px; }
+.concept-vlink{
+  display: block;
+  flex: none;
+  width: 16px;
+  height: 44px;
+  overflow: visible;
+}
+/* Each vertical link sits under the centre of the shorter label it joins
+   ("Territorial loss" on the left, "Collective memory" on the right). */
+.concept-labels--in .concept-vlink{ align-self: flex-end; margin-right: 59px; }
+.concept-labels--out .concept-vlink{ align-self: flex-start; margin-left: 63px; }
+.concept-arrow-dashed{ stroke-dasharray: 3 3; stroke-linecap: butt; }
+/* Timeline brackets (shocks / aftermath / legacies): phases, not nodes.
+   Three contiguous segments under the diagram; the aftermath segment is
+   centred on the concept, the window in which the mode of mourning emerges. */
+.concept-flow--outcomes{ grid-template-rows: 100px auto; padding-bottom: 36px; }
+.concept-flow--outcomes .concept-labels--in,
+.concept-flow--outcomes .concept-arrows--in,
+.concept-flow--outcomes .concept-result,
+.concept-flow--outcomes .concept-arrows--out,
+.concept-flow--outcomes .concept-labels--out{ grid-row: 1; }
+.concept-period{
+  grid-row: 2;
+  position: relative;
+  height: 9px;
+  border: 1.5px solid #A79F8C;
+  border-top: none;
+}
+.concept-period span{
+  position: absolute;
+  left: 50%;
+  top: 14px;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: #5A5648;
+  white-space: nowrap;
+}
+.concept-period--shocks{ grid-column: 1 / 3; margin: 12px 27px 0 0; }
+/* Middle of the incoming-arrow column to middle of the outgoing one. */
+.concept-period--aftermath{ grid-column: 2 / 5; margin: 12px 23px 0; }
+.concept-period--legacies{ grid-column: 4 / 6; margin: 12px 0 0 27px; }
+/* Five columns need ~765px; hide earlier than the original three-column
+   version so it never overflows the page. */
+@media (max-width: 860px){
+  .concept-flow--outcomes{ display: none; }
+}
+
 /* ============================================================
    CASE MAP BANDS — text panel above, full-width historical image below
    ============================================================ */
